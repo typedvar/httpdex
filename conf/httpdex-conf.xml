@@ -1,0 +1,26 @@
+<httpdex-config>
+	<srvthreads>10</srvthreads>
+	<admthreads>1</admthreads>
+	<sysroot>D:/Personal_Workspace/httpd/bin</sysroot>
+	<docroot>E:/httpdex</docroot>
+	<srvport>9001</srvport>
+	<admport>9099</admport>
+	<vhost>
+		<hostname>www.hola.com</hostname>
+		<docroot>E:/WEBROOT/vhosts/hola</docroot>
+		<srvlog>E:/WEBROOT/vhosts/hola/log/service.log</srvlog>
+		<errlog>E:/WEBROOT/vhosts/hola/log/error.log</errlog>
+	</vhost>
+	<vhost>
+		<hostname>www.jupiter.com</hostname>
+		<docroot>E:/WEBROOT/vhosts/jupiter</docroot>
+		<srvlog>E:/WEBROOT/vhosts/jupiter/log/service.log</srvlog>
+		<errlog>E:/WEBROOT/vhosts/jupiter/log/error.log</errlog>
+	</vhost>
+	<vhost>
+		<hostname>www.timeismoney.com</hostname>
+		<docroot>E:/WEBROOT/vhosts/timeismoney</docroot>
+		<srvlog>E:/WEBROOT/vhosts/timeismoney/log/service.log</srvlog>
+		<errlog>E:/WEBROOT/vhosts/holtimeismoney/log/error.log</errlog>
+	</vhost>
+</httpdex-config>

@@ -1,0 +1,3 @@
+Test URLS:
+1. http://www.synlin.com/../scripts/../../.../../../../
+2. http://www.synlin.com/scripts/man2text

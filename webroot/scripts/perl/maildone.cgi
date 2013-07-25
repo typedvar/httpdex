@@ -1,0 +1,79 @@
+#!/usr/bin/perl 
+
+# unattended Mail::Sendmail test, sends a message to the author
+# but you probably want to change $mail{To} below
+# to send the message to yourself.
+# version 0.78
+
+# if you change your mail server, you may need to change the From:
+# address below.
+$mail{From} = 'Sendmail Test <abanerjee@telephone.com>';
+
+# $mail{To} = 'Amitava_Banerjee@syntelinc.com <Amitava_Banerjee@syntelinc.com>';
+# $mail{To} = ' <ami_ban2001@yahoo.com>';
+#$mail{To}   = 'Sendmail Test <Kiran_Raghavan@syntelinc.com>';
+#$mail{Cc} = 'Sendmail Test <Amitava_Banerjee@syntelinc.com>';
+
+$mail{To} = 'Amitava_Banerjee@syntelinc.com <Amitava_Banerjee@syntelinc.com>';
+
+#$mail{To}   = 'Sendmail Test <Avinandan_Sengupta@syntelinc.com>';
+# $mail{To}   = 'Sendmail Test <Sridhar_Rangarajan@syntelinc.com>';
+
+# $mail{To}   = 'Sendmail Test <Amitava_Banerjee@syntelinc.com>';
+# $mail{To}   = 'Sendmail Test <sendmail@alma.ch>, You me@myaddress';
+
+# if you want to get a copy of the test mail, you need to specify your
+# own server here, by name or IP address
+$server = '172.17.30.19';
+#$server = 'my.usual.mail.server';
+
+BEGIN { $| = 1; print "1..2\n"; }
+END {print "not ok 1\n" unless $loaded;}
+
+use Mail::Sendmail;
+$loaded = 1;
+print "ok 1\n";
+
+print <<EOT
+Test Mail::Sendmail $Mail::Sendmail::VERSION
+
+Try to send a message to the author (and/or whoever if you edited test.pl)
+
+(The test is designed so it can be run by Test::Harness from CPAN.pm.
+Edit it to send the mail to yourself for more concrete feedback. If you
+do this, you also need to specify a different mail server, and possibly
+a different From: address.)
+
+Current recipient(s): '$mail{To}'
+Copy to : '$mail{Cc}'
+
+EOT
+;
+
+if ($server) {
+    $mail{Smtp} = $server;
+    print "Server set to: $server\n";
+}
+
+$mail{Subject} = "It's a test mail... from Linux ";
+
+$mail{Message} = "Hi, \n\n";
+$mail{Message} .= "This is a test message sent From Linux through PERL.";
+$mail{Message} .= " Now you can send mail anywehre in the world form the local linux box :) \n";
+$mail{Message} .= "!!!, \n";
+$mail{Message} .= "Amit \n";
+
+# Go send it
+print "Sending...\n";
+
+if (sendmail %mail) {
+    print "content of \$Mail::Sendmail::log:\n$Mail::Sendmail::log\n";
+    if ($Mail::Sendmail::error) {
+        print "content of \$Mail::Sendmail::error:\n$Mail::Sendmail::error\n";
+    }
+    print "ok 2\n";
+}
+else {
+    print "\n!Error sending mail:\n$Mail::Sendmail::error\n";
+    print "not ok 2\n";
+}

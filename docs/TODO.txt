@@ -1,0 +1,17 @@
+HTTP DAEMON TODO TXT:
+
+  1. Allocate/deallocate memory using memory pool - Done
+  2. Load/reload data from config files dynamically and store data in Binary Tree - Partly Done
+  3. Create config file loader module - Done
+  4. Create generic hashtable implementation
+  5. Create support for virtual host ;) if you want to give support for 
+     http 1.1 - Done
+  6. Modularize code - Done
+  7. Make matchIndex case Insensitive - Done
+  8. If http version is 1.1 or greater, check for presence of hostname. If not found
+     send back 400.
+  9. Set up access control.
+ 10. Develop a robust file ops module.
+ 11. Remove the static const array of mime types and subtypes. Use the mime.data as the single source.
+ 12. Create per virtual host logger support - Done
+ 13. Document the requirement analysis and design phases.
