@@ -1,0 +1,33 @@
+#!/bin/sh
+
+#script to view log files
+
+#check to see if default 
+#log is being inspected
+
+if [ "$#" -gt 2 ]
+then
+   echo "usage - hdlog.sh [virtual host name]"
+   exit -1;
+fi
+
+if [ "$#" -eq 0 ]
+then
+   logname=httpdex
+else
+   logname=$1
+fi
+
+#Actually less the log
+logdir="/logs/"
+logfile=$logname".log"
+logabs=$PWD$logdir$logfile
+
+if [ -e $logabs ]
+then
+   less "./logs/$logfile"
+else
+   echo "Virtual host \"$logname\" not found"
+   exit -2;
+fi
+#End of File

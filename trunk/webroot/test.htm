@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<TITLE>httpdEx Post Test Page</TITLE>
+</HEAD>
+<BODY bottomMargin=0 leftMargin=0 rightMargin=0 topMargin=0 marginwidth="0" marginheight="0">
+<HR>
+<center>
+<h3>Test GET</H3>
+<FORM action="/scripts/perl/printenv.cgi" method=GET>
+<table align="center">
+		<tr>
+			<td>
+				Name:
+			</td>
+			<td>
+				<input name="NAME">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Address:
+			</td>
+			<td>
+				<input name="ADDRESS"><br>
+			</td>
+		</tr>
+</table>
+
+	<input name="OK" value="TEST GET" type="submit">
+</FORM>
+<HR>
+<h3>Print the environment</h3>
+<FORM action="/scripts/perl/printenv.cgi" method=POST>
+<table align="center">
+		<tr>
+			<td>
+				DATA STREAM 1:
+			</td>
+			<td>
+				<input name="DATA1">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				DATA STREAM 2:
+			</td>
+			<td>
+				<input name="DATA2"><br>
+			</td>
+		</tr>
+</table>
+
+<input name="OK" value="TEST POST" type="submit">
+</FORM>
+<HR>
+<h3>Stress test server capability</h3>
+<FORM action="/scripts/perl/big.cgi" method=POST>
+<table align="center">
+		<tr>
+			<td>
+				DATA STREAM 1:
+			</td>
+			<td>
+				<input name="DATA1">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				DATA STREAM 2:
+			</td>
+			<td>
+				<input name="DATA2"><br>
+			</td>
+		</tr>
+</table>
+
+	<input name="OK" value="TEST BIG" type="submit">
+</FORM>
+<HR>
+</center>
+</BODY>
+</HTML>

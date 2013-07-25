@@ -1,0 +1,151 @@
+#################################################################
+# Copyright (c) 2003 Avinandan Sengupta. All rights reserved.   #
+#                                                               #
+# Makefile generated on : Thu 03/06/2003 at 14:21:57.07         #
+# Project name : httpdex                                        #
+#################################################################
+
+SERVER=httpdex
+CLIENT=httpc
+WINCC=bcc32.exe
+UNIXCC=c:\cygwin\bin\gcc.exe
+CC=$(UNIXCC)
+CFLAGS=-g -mthreads
+OUTOPT=-o
+MACROS=-D_HX_UNIX_ -D_PTHREADS_ -D_HX_CYGWIN_ 
+PWINLIB=
+LIBS=-lpthread $(PWINLIB)
+UP=..
+SRC=source
+INC=header
+OBJS=objs
+BIN=bin
+
+#Available MACROS
+#-D_HX_WIN32_ -D_HX_UNIX_ -DMEMWATCH -DHX_DEBUG_MEMSYS -D_HX_WINTHREADS_ -D_PTHREADS_ -D_HX_CYGWIN_
+
+#These are the objects required by both the client and the server
+CORE_OBJS=$(OBJS)/httpThreads.obj 	\
+				$(OBJS)/httpLock.obj 	\
+				$(OBJS)/httpUtils.obj 	\
+				$(OBJS)/httpMemsys.obj	\
+				$(OBJS)/httpList.obj 	\
+				$(OBJS)/httpLog.obj 		\
+				$(OBJS)/httpSock.obj		
+#				$(OBJS)/memwatch.obj 	
+
+SERVER_OBJS=$(OBJS)/httpEnv.obj 			\
+				$(OBJS)/httpExecutor.obj 	\
+				$(OBJS)/httpHTML.obj 		\
+				$(OBJS)/httpConf.obj 		\
+				$(OBJS)/httpVhost.obj 		\
+				$(OBJS)/httpCGI.obj 			\
+				$(OBJS)/httpMime.obj 		\
+				$(OBJS)/httpResponse.obj 	\
+				$(OBJS)/httpAdmin.obj 		\
+				$(OBJS)/httpRequest.obj 	\
+				$(OBJS)/httpProcessor.obj 	\
+				$(OBJS)/httpDirlister.obj 	\
+				$(OBJS)/httpEngine.obj 		\
+				$(OBJS)/httpConn.obj 		\
+				$(OBJS)/httpSpawner.obj 	\
+				$(OBJS)/httpMain.obj			\
+				$(CORE_OBJS)
+
+CLIENT_OBJS=$(OBJS)/httpController.obj \
+				$(OBJS)/httpClient.obj		\
+				$(CORE_OBJS)
+ 
+all: $(SERVER) $(CLIENT) 
+ 
+$(CLIENT): $(CLIENT_OBJS)
+	$(CC) $(CFLAGS) $(OUTOPT)$(BIN)/client/$@ $(CLIENT_OBJS) $(LIBS)
+
+$(SERVER): $(SERVER_OBJS)
+	$(CC) $(CFLAGS) $(OUTOPT)$(BIN)/$@ $(SERVER_OBJS) $(LIBS)
+ 
+$(OBJS)/httpMain.obj: $(SRC)/httpMain.c
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpMain.c
+
+$(OBJS)/httpSpawner.obj: $(SRC)/httpSpawner.c $(INC)/httpSpawner.h $(INC)/httpUtils.h $(INC)/httpProcessor.h $(INC)/httpEngine.h $(INC)/httpRequest.h $(INC)/httpMemsys.h $(INC)/httpResponse.h $(INC)/httpLog.h $(INC)/httpConn.h $(INC)/httpCommon.h $(INC)/httpSock.h 
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpSpawner.c
+ 
+$(OBJS)/httpConn.obj: $(SRC)/httpConn.c $(INC)/httpConn.h $(INC)/httpProcessor.h $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpEngine.h $(INC)/httpRequest.h $(INC)/httpResponse.h $(INC)/httpCommon.h  $(INC)/httpSock.h  
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpConn.c
+
+$(OBJS)/httpProcessor.obj: $(SRC)/httpProcessor.c $(INC)/httpProcessor.h $(INC)/httpEngine.h $(INC)/httpUtils.h $(INC)/httpMemsys.h $(INC)/httpInclude.h $(INC)/httpRequest.h $(INC)/httpResponse.h $(INC)/httpCommon.h $(INC)/httpVhost.h  $(INC)/httpSock.h  
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpProcessor.c
+ 
+$(OBJS)/httpEngine.obj: $(SRC)/httpEngine.c $(INC)/httpEngine.h $(INC)/httpUtils.h $(INC)/httpMemsys.h $(INC)/httpRequest.h $(INC)/httpResponse.h $(INC)/httpCommon.h $(INC)/httpVhost.h  $(INC)/httpSock.h  
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpEngine.c 
+
+$(OBJS)/httpCGI.obj: $(SRC)/httpCGI.c $(INC)/httpCGI.h $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpRequest.h $(INC)/httpResponse.h $(INC)/httpVhost.h $(INC)/httpCommon.h  $(INC)/httpSock.h 
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpCGI.c 
+
+$(OBJS)/httpResponse.obj: $(SRC)/httpResponse.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpResponse.h $(INC)/httpVhost.h $(INC)/httpCommon.h  $(INC)/httpSock.h  
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpResponse.c
+
+$(OBJS)/httpRequest.obj: $(SRC)/httpRequest.c $(INC)/httpRequest.h $(INC)/httpUtils.h $(INC)/httpMemsys.h $(INC)/httpMime.h $(INC)/httpConf.h $(INC)/httpVhost.h $(INC)/httpCommon.h  $(INC)/httpSock.h  
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpRequest.c
+ 
+$(OBJS)/httpAdmin.obj: $(SRC)/httpAdmin.c $(INC)/httpAdmin.h $(INC)/httpUtils.h $(INC)/httpMemsys.h $(INC)/httpMime.h $(INC)/httpConf.h $(INC)/httpCommon.h  $(INC)/httpSock.h 
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpAdmin.c
+ 
+$(OBJS)/httpMime.obj: $(SRC)/httpMime.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpMime.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpMime.c
+
+$(OBJS)/httpConf.obj: $(SRC)/httpConf.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpVhost.h $(INC)/httpCommon.h $(INC)/httpConf.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpConf.c
+ 
+$(OBJS)/httpVhost.obj: $(SRC)/httpVhost.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpVhost.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpVhost.c
+ 
+$(OBJS)/httpList.obj: $(SRC)/httpList.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpVhost.h $(INC)/httpList.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpList.c
+
+$(OBJS)/httpThreads.obj: $(SRC)/httpThreads.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpThreads.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpThreads.c
+ 
+$(OBJS)/httpLock.obj: $(SRC)/httpLock.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpLock.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpLock.c
+
+$(OBJS)/httpHTML.obj: $(SRC)/httpHTML.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpVhost.h $(INC)/httpHTML.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpHTML.c
+ 
+$(OBJS)/httpExecutor.obj: $(SRC)/httpExecutor.c $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpMemsys.h $(INC)/httpVhost.h $(INC)/httpExecutor.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpExecutor.c
+
+$(OBJS)/httpEnv.obj: $(SRC)/httpEnv.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpVhost.h $(INC)/httpCommon.h $(INC)/httpEnv.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpEnv.c
+
+$(OBJS)/httpDirlister.obj: $(SRC)/httpDirlister.c $(INC)/httpMemsys.h $(INC)/httpUtils.h $(INC)/httpVhost.h $(INC)/httpCommon.h $(INC)/httpDirlister.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpDirlister.c
+ 
+$(OBJS)/httpLog.obj: $(SRC)/httpLog.c $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpMemsys.h $(INC)/httpLog.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpLog.c
+ 
+$(OBJS)/httpUtils.obj: $(SRC)/httpUtils.c $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpVhost.h $(INC)/httpMemsys.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpUtils.c
+ 
+$(OBJS)/httpMemsys.obj: $(SRC)/httpMemsys.c $(INC)/httpUtils.h $(INC)/httpCommon.h $(INC)/httpMemsys.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpMemsys.c
+
+$(OBJS)/httpController.obj: $(SRC)/httpController.c $(INC)/httpController.h 
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpController.c
+
+$(OBJS)/httpClient.obj: $(SRC)/httpClient.c $(INC)/httpUtils.h $(INC)/httpController.h 
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC) $(SRC)/httpClient.c
+
+$(OBJS)/httpSock.obj: $(SRC)/httpSock.c $(INC)/httpSock.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/httpSock.c
+
+$(OBJS)/memwatch.obj: $(SRC)/memwatch.c $(INC)/memwatch.h
+	$(CC) $(CFLAGS) -c -o$@ $(MACROS) -I$(INC)  $(SRC)/memwatch.c
+
+rebuild: clean all
+
+clean: 
+	rm -f $(OBJS)/*.obj 2>/dev/null; rm -f $(BIN)/* 2>/dev/null; rm -f $(BIN)/client/* 2>/dev/null;
+
+winclean: 
+	del /Q $(OBJS)\*.obj 2>nul; del /Q $(BIN)\* 2>nul; del /Q $(BIN)\client\* 2>nul;

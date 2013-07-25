@@ -1,0 +1,32 @@
+#!/bin/sh
+# Script to stop the httpdEx server
+
+# Check for the existence of the PID file. If present, extract 
+# the PID and check whether a process with that pid is running 
+# or not. If running, initimate console, else start the server.
+
+SERVERROOT="/home/testimp/httpdex"
+PIDPATH="$SERVERROOT/bin"
+PIDFILE="httpdEx.pid"
+VERSION="1.0"
+PIDABS=$PIDPATH/$PIDFILE
+
+if [ -e $PIDABS ]
+then
+   SRVPID=`cat $PIDABS`
+   
+   isrunning=`ps -eax|sed --expression="s/^ *//g"|cut -d " " -f1|grep $SRVPID`
+   
+   if [ -z $isrunning ]
+   then 
+      # remove the old pid file
+      echo "httpdEx $VERSION not running"
+      exit -1
+   else
+      echo "Attempting to stop httpdEx $VERSION"
+      kill -INT $SRVPID
+   fi
+fi       
+
+echo "Server stopped"
+# End of File
