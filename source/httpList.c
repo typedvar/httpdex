@@ -229,14 +229,24 @@ hx_remove(hx_list_t *list)
    node = list->tail;
    if(node)
    {
-      /* make the next of the tail NULL */
-      node->prv->nxt = NULL;
-      list->tail = node->prv;
+      if(node->prv)
+      {
+         /* make the next of the tail NULL */
+         node->prv->nxt = NULL;
+         list->tail = node->prv;
+      }
+      else
+      {
+         /* single node list - head and tail are the same */
+         list->head = NULL;
+         list->tail = NULL;
+      }
 
       /* get the data and free the node */
       data = hx_deleteNode(node, list->allocator);
    }
-   --list->entries;
+   if(node)
+      --list->entries;
    hx_unlock(list->lock);
 
    return data;
@@ -256,12 +266,22 @@ hx_remove_first(hx_list_t *list)
 
    if(node)
    {
-      node->nxt->prv = NULL;
-      list->head = node->nxt;
+      if(node->nxt)
+      {
+         node->nxt->prv = NULL;
+         list->head = node->nxt;
+      }
+      else
+      {
+         /* single node list - head and tail are the same */
+         list->head = NULL;
+         list->tail = NULL;
+      }
 
       /* get the data and free the node */
       data = hx_deleteNode(node, list->allocator);
-      --list->entries;
+      if(node)
+         --list->entries;
    }
    hx_unlock(list->lock);
 
